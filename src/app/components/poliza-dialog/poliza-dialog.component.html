@@ -1,0 +1,40 @@
+<h2 mat-dialog-title style="text-align: center;">{{title}}</h2>
+
+<mat-dialog-content [formGroup]="form" novalidate>
+    <mat-form-field>
+        <mat-label>Empleado</mat-label>
+        <mat-select formControlName="id_empleado">
+          <mat-option>
+            <ngx-mat-select-search [formControl]="searchEmpCtrl" placeholderLabel="Buscar" noEntriesFoundLabel="No encontrado..."></ngx-mat-select-search>
+          </mat-option>
+    
+          <mat-option *ngFor="let emp of filteredEmps | async" [value]="emp.idEmpleado">
+            {{ emp.idEmpleado }}: {{ emp.nombre }} {{ emp.apellido }}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Artículo</mat-label>
+        <mat-select formControlName="sku">
+          <mat-option>
+            <ngx-mat-select-search [formControl]="searchArtCtrl" placeholderLabel="Buscar" noEntriesFoundLabel="No encontrado..."></ngx-mat-select-search>
+          </mat-option>
+    
+          <mat-option *ngFor="let art of filteredArts | async" [value]="art.sku">
+            {{ art.sku }}: {{ art.nombre }} [{{ art.cantidad }}]
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Cantidad</mat-label>
+        <input matInput type="number" min="1" formControlName="cantidad">
+    </mat-form-field>
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions class="mb-3" style="float: right;">
+    <button class="btn btn-danger mr-2" (click)="close()">Cerrar</button>
+    <button class="btn btn-primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>

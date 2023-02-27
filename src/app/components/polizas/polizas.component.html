@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <h1 class="navbar-nav mr-auto">
+        Control de pólizas de faltantes.
+      </h1>
+      <div class="form-inline my-2 my-lg-0">
+        <button class="btn btn-danger my-2 my-sm-0" (click)="logout()">Salir</button>
+      </div>
+    </div>
+</nav>
+<div class="container mt-2">
+  <h1>Pólizas de faltantes</h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Buscar por nombre...</mat-label>
+    <input matInput type="text" [formControl]="searchPolizaCtrl">
+  </mat-form-field>
+  <button class="btn btn-primary" style="float: right;" (click)="newPoliza()">Agregar póliza</button>
+
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" *ngIf="!isLoading; else loader">
+      
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id póliza. </th>
+            <td mat-cell *matCellDef="let element"> {{ element.idPoliza }} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="emp">
+            <th mat-header-cell *matHeaderCellDef> Empleado </th>
+            <td mat-cell *matCellDef="let element"> {{ element.empleado.idEmpleado }}: {{ element.empleado.nombre }} {{ element.empleado.apellido }} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="article">
+            <th mat-header-cell *matHeaderCellDef> Artículo </th>
+            <td mat-cell *matCellDef="let element"> {{ element.articulo.nombre }} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="sku">
+            <th mat-header-cell *matHeaderCellDef> SKU </th>
+            <td mat-cell *matCellDef="let element"> {{ element.articulo.sku }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+            <td mat-cell *matCellDef="let element"> {{ element.cantidad }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Fecha </th>
+            <td mat-cell *matCellDef="let element"> {{ element.fecha | slice:0:10 }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="options">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon matTooltip="Editar" (click)="editPoliza(element.idPoliza)" class="blue" style="cursor: pointer;">edit</mat-icon>
+                <mat-icon matTooltip="Borrar" (click)="deletePoliza(element.idPoliza)" class="red" style="cursor: pointer;">delete</mat-icon>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator
+          #paginator
+          [length]="totalPolizas"
+          [pageSizeOptions]="pageSizes"
+          showFirstLastButtons>
+        </mat-paginator>
+    </div>
+</div>
+<ng-template #loader>
+  <mat-spinner style="margin:0 auto;"></mat-spinner>
+</ng-template>

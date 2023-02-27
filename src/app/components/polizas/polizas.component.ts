@@ -141,7 +141,8 @@ export class PolizasComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(data => {
       if(data.reload){
-        this.getPolizas();
+        this.snackBar.open(`Póliza creada correctamente`, '',{ duration: 2000 });
+        this.searchPolizaCtrl.setValue("");
       }
     });
   }
@@ -158,8 +159,9 @@ export class PolizasComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(data => {      
-      if(data.reload){        
-        this.getPolizas();
+      if(data.reload){
+        this.snackBar.open(`Póliza ${id} editada correctamente`, '',{ duration: 2000 });
+        this.searchPolizaCtrl.setValue("");
       }
     });
   }
@@ -176,7 +178,7 @@ export class PolizasComponent implements OnInit, AfterViewInit {
         this.service.deletePoliza(id).subscribe({
           next: (response) => {
             this.snackBar.open(`Póliza ${id} eliminada`, '',{ duration: 2000 });
-            this.getPolizas();
+            this.searchPolizaCtrl.setValue("");
           },
           error: (e) => {
             console.log(e);

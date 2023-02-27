@@ -4,6 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## RUN
 
+Setea "apiURL" en environments para conectarse a api.
 Ejecuta comando "npm install" para instalar dependencias.
 Ejecuta comando "ng serve".
 Accede a "http://localhost:4200/"
